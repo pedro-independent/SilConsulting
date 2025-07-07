@@ -3,48 +3,49 @@ import './styles/style.css'
 gsap.registerPlugin();
 
 /* Menu Open  */
-const dropdown = document.querySelector('.dropdown-nav-link');
-const navbar = document.querySelector('.navbar');
-const navServicesWrapper = document.querySelector('.nav-services-list-wrap');
+document.addEventListener("DOMContentLoaded", function() {
+    const navbar = document.querySelector(".navbar");
+    const dropdownTrigger = document.querySelector(".dropdown-nav-link");
+    const navServicesList = document.querySelector(".nav-services-list-wrap");
+    const dropdownIcon = document.querySelector(".dropdown-nav-icon");
+    const navItems = document.querySelectorAll(".nav-services-item");
 
-// Set the initial state of the nav services wrapper using GSAP
-gsap.set(navServicesWrapper, { display: "none", opacity: 0 });
 
-function expandNavbar() {
-    // Make the wrapper visible before animating it
-    gsap.set(navServicesWrapper, { display: "flex" });
+    gsap.set(navServicesList, { height: "auto" });
+    const servicesHeight = gsap.getProperty(navServicesList, "height");
+    gsap.set(navServicesList, { height: 0 });
 
-    // Animate both the navbar height and the wrapper's opacity at the same time
-    gsap.to(navbar, {
-        height: "13em",
-        duration: 0.4,
-        ease: "power2.out"
-    });
-    gsap.to(navServicesWrapper, {
-        opacity: 1,
-        duration: 0.3,
-        delay: 0.2, 
-        ease: "power2.out"
-    });
-}
+    gsap.set(navItems, { opacity: 0, y: 15 });
 
-function collapseNavbar() {
-    gsap.to(navServicesWrapper, {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-            gsap.set(navServicesWrapper, { display: "none" });
-        }
-    });
+    const timeline = gsap.timeline({ paused: true, reversed: true });
 
-    gsap.to(navbar, {
-        height: "3em",
-        duration: 0.4,
-        ease: "power2.in"
-    });
-}
+    timeline
+        .to(navbar, {
+            height: `+=${servicesHeight}`,
+            duration: 0.4,
+            ease: "power2.inOut"
+        })
+        .to(navServicesList, {
+            height: servicesHeight,
+            opacity: 1,
+            duration: 0.4,
+            ease: "power2.inOut"
+        }, "<")
+        .to(dropdownIcon, {
+            rotate: 0,
+            duration: 0.3,
+            ease: "power2.inOut"
+        }, "<")
 
-// Event Listeners
-dropdown.addEventListener("mouseenter", expandNavbar);
-navbar.addEventListener("mouseleave", collapseNavbar);
+        .to(navItems, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            stagger: 0.08,
+            ease: "power2.out"
+        }, "+=0.025");
+
+
+    dropdownTrigger.addEventListener("mouseenter", () => timeline.play());
+    navbar.addEventListener("mouseleave", () => timeline.reverse());
+});
