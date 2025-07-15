@@ -124,20 +124,20 @@ function initMaskTextScrollReveal() {
 initMaskTextScrollReveal();
 
 /* Page load animation */
-function initPageLoad() {
-  const heroContainer = document.querySelector(".home-hero-container");
-  const spline = document.querySelector(".home-hero-spline");
-  //const heroHeading = document.querySelectorAll('[data-split="hero"]');
+// function initPageLoad() {
+//   const heroContainer = document.querySelector(".home-hero-container");
+//   const spline = document.querySelector(".home-hero-spline");
+//   //const heroHeading = document.querySelectorAll('[data-split="hero"]');
 
-  gsap.set(heroContainer, { scale: 0, autoAlpha: 1 });
+//   gsap.set(heroContainer, { scale: 0, autoAlpha: 1 });
 
-  const masterTl = gsap.timeline();
+//   const masterTl = gsap.timeline();
 
-  masterTl.to(heroContainer, {
-    scale: 1,
-    duration: 1.2,
-    ease: "expo.out",
-  });
-}
+//   masterTl.to(heroContainer, {
+//     scale: 1,
+//     duration: 1.2,
+//     ease: "expo.out",
+//   });
+// }
 
-initPageLoad();
+// initPageLoad();
