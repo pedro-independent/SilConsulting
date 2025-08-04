@@ -79,65 +79,47 @@ function fadeNavbarOnFooter() {
 fadeNavbarOnFooter();
 
 /* Split Text */
-const splitConfig = {
-  lines: { duration: 0.8, stagger: 0.15 },
-  words: { duration: 0.6, stagger: 0.06 },
-  chars: { duration: 0.4, stagger: 0.01 },
-};
+// const splitConfig = {
+//   lines: { duration: 0.8, stagger: 0.15 },
+//   words: { duration: 0.6, stagger: 0.06 },
+//   chars: { duration: 0.4, stagger: 0.01 },
+// };
 
-function initMaskTextScrollReveal() {
-  document.querySelectorAll('[data-split="heading"]').forEach((heading) => {
-    const type = heading.dataset.splitReveal || "lines";
-    const typesToSplit =
-      type === "lines"
-        ? ["lines"]
-        : type === "words"
-        ? ["lines", "words"]
-        : ["lines", "words", "chars"];
+// function initMaskTextScrollReveal() {
+//   document.querySelectorAll('[data-split="heading"]').forEach((heading) => {
+//     const type = heading.dataset.splitReveal || "lines";
+//     const typesToSplit =
+//       type === "lines"
+//         ? ["lines"]
+//         : type === "words"
+//         ? ["lines", "words"]
+//         : ["lines", "words", "chars"];
 
-    SplitText.create(heading, {
-      type: typesToSplit.join(", "),
-      mask: "lines",
-      autoSplit: true,
-      linesClass: "line",
-      wordsClass: "word",
-      charsClass: "letter",
-      onSplit: function (instance) {
-        const targets = instance[type];
-        const config = splitConfig[type];
-        return gsap.from(targets, {
-          yPercent: 110,
-          duration: config.duration,
-          stagger: config.stagger,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: heading,
-            start: "clamp(top 80%)",
-            once: true,
-          },
-        });
-      },
-    });
-  });
-}
-
-initMaskTextScrollReveal();
-
-/* Page load animation */
-// function initPageLoad() {
-//   const heroContainer = document.querySelector(".home-hero-container");
-//   const spline = document.querySelector(".home-hero-spline");
-//   //const heroHeading = document.querySelectorAll('[data-split="hero"]');
-
-//   gsap.set(heroContainer, { scale: 0, autoAlpha: 1 });
-
-//   const masterTl = gsap.timeline();
-
-//   masterTl.to(heroContainer, {
-//     scale: 1,
-//     duration: 1.2,
-//     ease: "expo.out",
+//     SplitText.create(heading, {
+//       type: typesToSplit.join(", "),
+//       mask: "lines",
+//       autoSplit: true,
+//       linesClass: "line",
+//       wordsClass: "word",
+//       charsClass: "letter",
+//       onSplit: function (instance) {
+//         const targets = instance[type];
+//         const config = splitConfig[type];
+//         return gsap.from(targets, {
+//           yPercent: 110,
+//           duration: config.duration,
+//           stagger: config.stagger,
+//           ease: "expo.out",
+//           scrollTrigger: {
+//             trigger: heading,
+//             start: "clamp(top 80%)",
+//             once: true,
+//           },
+//         });
+//       },
+//     });
 //   });
 // }
 
-// initPageLoad();
+// initMaskTextScrollReveal();
+
