@@ -78,48 +78,47 @@ function fadeNavbarOnFooter() {
 
 fadeNavbarOnFooter();
 
-/* Split Text */
-// const splitConfig = {
-//   lines: { duration: 0.8, stagger: 0.15 },
-//   words: { duration: 0.6, stagger: 0.06 },
-//   chars: { duration: 0.4, stagger: 0.01 },
-// };
+/* Legal Pages Anchor Menu */
+  document.addEventListener("DOMContentLoaded", function () {
+    const richText = document.querySelector(".legal-text");
+    const anchorMenu = document.querySelector(".legal-sticky-nav");
 
-// function initMaskTextScrollReveal() {
-//   document.querySelectorAll('[data-split="heading"]').forEach((heading) => {
-//     const type = heading.dataset.splitReveal || "lines";
-//     const typesToSplit =
-//       type === "lines"
-//         ? ["lines"]
-//         : type === "words"
-//         ? ["lines", "words"]
-//         : ["lines", "words", "chars"];
+    if (!richText || !anchorMenu) return;
 
-//     SplitText.create(heading, {
-//       type: typesToSplit.join(", "),
-//       mask: "lines",
-//       autoSplit: true,
-//       linesClass: "line",
-//       wordsClass: "word",
-//       charsClass: "letter",
-//       onSplit: function (instance) {
-//         const targets = instance[type];
-//         const config = splitConfig[type];
-//         return gsap.from(targets, {
-//           yPercent: 110,
-//           duration: config.duration,
-//           stagger: config.stagger,
-//           ease: "expo.out",
-//           scrollTrigger: {
-//             trigger: heading,
-//             start: "clamp(top 80%)",
-//             once: true,
-//           },
-//         });
-//       },
-//     });
-//   });
-// }
+    // Clear any existing menu items (in case of rerender)
+    anchorMenu.innerHTML = "";
 
-// initMaskTextScrollReveal();
+    const headings = richText.querySelectorAll("h2");
+    const usedIds = new Set(); // To ensure uniqueness
+
+    headings.forEach((heading, index) => {
+      // Generate a slug from the heading text
+      let slug = heading.textContent
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')        // Remove punctuation
+        .replace(/\s+/g, '-')            // Replace spaces with hyphens
+        .replace(/-+/g, '-');            // Remove duplicate hyphens
+
+      // Ensure ID is unique by appending a number if needed
+      let uniqueSlug = slug;
+      let counter = 1;
+      while (usedIds.has(uniqueSlug)) {
+        uniqueSlug = `${slug}-${counter++}`;
+      }
+      usedIds.add(uniqueSlug);
+
+      heading.id = uniqueSlug;
+
+      // Create link element
+      const link = document.createElement("a");
+      link.href = `#${uniqueSlug}`;
+      link.textContent = heading.textContent;
+      link.classList.add("anchor-link"); // Optional styling class
+
+      anchorMenu.appendChild(link);
+    });
+  });
+
+
 
