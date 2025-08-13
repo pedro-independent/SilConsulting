@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navServicesList = document.querySelector(".nav-services-list-wrap");
   const dropdownIcon = document.querySelector(".dropdown-nav-icon");
   const navItems = document.querySelectorAll(".nav-services-item");
+  const darkBg = document.querySelector(".dark-bg");
 
   gsap.set(navServicesList, { height: "auto" });
   const servicesHeight = gsap.getProperty(navServicesList, "height");
@@ -16,7 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   gsap.set(navItems, { opacity: 0, y: 15 });
 
-  const timeline = gsap.timeline({ paused: true, reversed: true });
+  const timeline = gsap.timeline({
+    paused: true,
+    reversed: true,
+    onStart: () => darkBg.classList.add("active"),
+    onReverseComplete: () => darkBg.classList.remove("active"),
+  });
 
   timeline
     .to(navbar, {
@@ -43,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       "<"
     )
-
     .to(
       navItems,
       {
@@ -59,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   dropdownTrigger.addEventListener("mouseenter", () => timeline.play());
   navbar.addEventListener("mouseleave", () => timeline.reverse());
 });
+
 
 /* Hide menu after footer */
 function fadeNavbarOnFooter() {
