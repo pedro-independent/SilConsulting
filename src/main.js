@@ -1,6 +1,9 @@
 import "./styles/style.css";
 
+const page = document.body.dataset.page;
+
 gsap.registerPlugin(SplitText, ScrollTrigger);
+
 
 /* Menu Open  */
 document.addEventListener("DOMContentLoaded", function () {
@@ -65,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
   navbar.addEventListener("mouseleave", () => timeline.reverse());
 });
 
-
 /* Hide menu after footer */
 function fadeNavbarOnFooter() {
   gsap.to(".navbar", {
@@ -74,16 +76,55 @@ function fadeNavbarOnFooter() {
       start: "top bottom",
       end: "top top+=100",
       scrub: true,
-      onEnter: () =>
-        gsap.to(".navbar", { opacity: 0, yPercent: 50, duration: 0.3 }),
-      onLeaveBack: () =>
-        gsap.to(".navbar", { opacity: 1, yPercent: 0, duration: 0.3 }),
-    },
+      onEnter: () => {
+        // Animate hide, then set display to none after
+        gsap.to(".navbar", {
+          opacity: 0,
+          yPercent: 50,
+          duration: 0.3,
+          onComplete: () => {
+            gsap.set(".navbar", { display: "none" });
+          }
+        });
+      },
+      onLeaveBack: () => {
+        // Set display to flex before showing
+        gsap.set(".navbar", { display: "flex" });
+        gsap.to(".navbar", {
+          opacity: 1,
+          yPercent: 0,
+          duration: 0.3
+        });
+      }
+    }
   });
 }
 
 fadeNavbarOnFooter();
 
+
+if (page === "services") {
+/* Services opacity on scroll */
+gsap.set(".process-item", { opacity: 0.3 });
+
+let tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".process-container",
+    start: "top center",
+    end: "bottom center",
+    //end: "+=300%", // enough space for 3 items
+    //pin: true,
+    scrub: true
+  }
+});
+
+gsap.utils.toArray(".process-item").forEach((item) => {
+  tl.to(item, { opacity: 1, duration: 1 })
+    .to(item, { opacity: 0.3, duration: 1 }, "+=0.5");
+});
+}
+
+if (page === "legal") {
 /* Legal Pages Anchor Menu */
   document.addEventListener("DOMContentLoaded", function () {
     const richText = document.querySelector(".legal-text");
@@ -125,6 +166,4 @@ fadeNavbarOnFooter();
       anchorMenu.appendChild(link);
     });
   });
-
-
-
+}
