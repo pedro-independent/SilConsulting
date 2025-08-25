@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         stagger: 0.08,
         ease: "power2.out",
       },
-      "+=0.025"
+      "+=0.01"
     );
 
   dropdownTrigger.addEventListener("mouseenter", () => timeline.play());
