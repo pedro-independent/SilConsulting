@@ -5,6 +5,12 @@ const page = document.body.dataset.page;
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
 
+// On page load, animate in
+window.addEventListener('DOMContentLoaded', () => {
+  const main = document.getElementById('main-content');
+  main.classList.add('pt-page-rotateRoomTopIn');
+});
+
 /* Reveal Content on Scroll */
 function initContentRevealScroll(){
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
