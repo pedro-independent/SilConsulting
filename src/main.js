@@ -283,12 +283,12 @@ items.forEach((item, i) => {
 gsap.to(items.slice(1), { // skip the first card so it stays fixed
   scale: 1,
   y: (i) => (i + 1) * 110,  // move each card further down as it reveals
-  stagger: -0.06,
+  stagger: -0.04,
   ease: "power1.out",
   scrollTrigger: {
     trigger: ".certificate-list-wrapper",
-    start: "top center",
-    end: "bottom center",
+    start: "top 60%",
+    end: "60% 60%",
     scrub: 1,
   }
 });
