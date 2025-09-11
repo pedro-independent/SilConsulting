@@ -246,6 +246,7 @@ fadeNavbarOnFooter();
 
 if (page === "services") {
 /* Services opacity on scroll */
+if (window.matchMedia('(min-width: 991px)').matches) {
 gsap.set(".process-item", { opacity: 0.3 });
 
 let tl = gsap.timeline({
@@ -263,6 +264,7 @@ gsap.utils.toArray(".process-item").forEach((item) => {
   tl.to(item, { opacity: 1, duration: 1 })
     .to(item, { opacity: 0.3, duration: 1 }, "+=0.5");
 });
+}
 }
 
 if (page === "about") {
